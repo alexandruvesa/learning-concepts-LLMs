@@ -21,21 +21,18 @@ def train_with_lora():
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(resnet18.parameters(), lr=0.001, momentum=0.9)
 
-    train_model(resnet18, trainloader, criterion, optimizer, epochs=1)
+    train_model(resnet18, trainloader, criterion, optimizer, epochs=3)
     test_model(resnet18, testloader)
 
 
 def fine_tune_with_lora():
     trainloader, testloader, classes = load_cifar10_dataset(selected_class=3)
     resnet18 = initialize_resnet18(with_lora=True)
+
     freeze_non_lora_layers(resnet18)
 
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(resnet18.parameters(), lr=0.001, momentum=0.9)
 
-    train_model(resnet18, trainloader, criterion, optimizer, epochs=1)
+    train_model(resnet18, trainloader, criterion, optimizer, epochs=3)
     test_model(resnet18, testloader)
-
-
-train_with_lora()
-fine_tune_with_lora()
